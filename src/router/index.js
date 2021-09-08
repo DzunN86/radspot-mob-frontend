@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { Login, Home, Users, Groups, SplashScreen } from '../pages';
+import { Login, Home, Users, Groups, SplashScreen, AddUser, Nas } from '../pages';
 import { ButtomNavigator } from '../components';
 
 const Stack = createStackNavigator();
@@ -12,7 +12,9 @@ const MainApp = () => {
         <Tab.Navigator tabBar={props => <ButtomNavigator {...props} />}>
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Users" component={Users} />
+            <Tab.Screen name="Add User" component={AddUser} />
             <Tab.Screen name="Groups" component={Groups} />
+            <Tab.Screen name="Nas" component={Nas} />
         </Tab.Navigator>
     )
 }
