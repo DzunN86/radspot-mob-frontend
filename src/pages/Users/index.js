@@ -1,14 +1,14 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 
 const Users = () => {
-    return (
-        <View>
-            <Text>Users Page</Text>
-        </View>
-    )
-}
+  return (
+    <View>
+      <Text>Users Page</Text>
+    </View>
+  );
+};
 
-export default Users
+export default Users;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

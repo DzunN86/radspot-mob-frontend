@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 import {
   StyleSheet,
@@ -7,10 +8,16 @@ import {
   ScrollView,
   ImageBackground,
 } from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Avatar, ImageHeader} from '../../assets';
 import {DashCard, Gap} from '../../components';
 
-const Users = () => {
+const Users = ({navigation}) => {
+  const keluar = () => {
+    AsyncStorage.removeItem('token').then(() => {
+      navigation.reset({index: 0, routes: [{name: 'Login'}]});
+    });
+  };
   return (
     <ImageBackground
       source={ImageHeader}
@@ -52,18 +59,19 @@ const Users = () => {
             />
           </View>
         </ScrollView>
+        <TouchableOpacity onPress={keluar}>
+          <Text style={styles.keluar}>Keluar</Text>
+        </TouchableOpacity>
         <View
-        style={{
-          paddingTop: 25,
-          paddingHorizontal: 30,
-          backgroundColor: '#F6F6F6',
-          flex: 1,
-          borderTopRightRadius: 20,
-          borderTopLeftRadius: 20,
-          marginTop: 35,
-        }}>
-          <Text>Hello</Text>
-        </View>
+          style={{
+            paddingTop: 25,
+            paddingHorizontal: 30,
+            backgroundColor: '#F6F6F6',
+            flex: 1,
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            marginTop: 35,
+          }}></View>
       </View>
     </ImageBackground>
   );
@@ -88,5 +96,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 12,
     marginTop: 25,
+  },
+  keluar: {
+    color: '#000000',
+    fontSize: 24,
   },
 });
