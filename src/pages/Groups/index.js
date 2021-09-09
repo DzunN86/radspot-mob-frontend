@@ -1,14 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import {Container} from 'native-base';
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {Head} from '../../components';
 
-const Groups = () => {
-    return (
-        <View>
-            <Text>Groups Page</Text>
-        </View>
-    )
-}
+const Groups = ({navigation}) => {
+  return (
+    <Container>
+      <Head title="Groups" onBack={() => navigation.goBack()} />
+    </Container>
+  );
+};
 
-export default Groups
+export default Groups;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

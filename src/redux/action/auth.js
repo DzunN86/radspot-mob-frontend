@@ -26,7 +26,6 @@ export const loginAction = (form, navigation) => (dispatch) => {
       navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
     })
     .catch((err) => {
-      console.log(err);
       dispatch(setLoading(false));
       showMessage(err.response.data.message || 'Invalid Login');
     });

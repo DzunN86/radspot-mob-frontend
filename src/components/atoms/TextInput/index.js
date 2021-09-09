@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, TextInput as TextInputRN} from 'react-native';
+import {StyleSheet, Text, TextInput as TextInputRN, View} from 'react-native';
 
 const TextInput = ({label, placeholder, ...resProps}) => {
   return (

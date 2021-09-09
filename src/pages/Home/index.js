@@ -1,47 +1,39 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
+import {List} from 'native-base';
+import React, {useEffect, useState} from 'react';
 import {
-  Body,
-  Container,
-  Content,
-  Left,
-  List,
-  ListItem,
-  Right,
-} from 'native-base';
-import React, {useEffect} from 'react';
-import {
+  Image,
+  ImageBackground,
+  RefreshControl,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  Image,
-  ScrollView,
-  ImageBackground,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import {useDispatch, useSelector} from 'react-redux';
 import {Avatar, ImageHeader} from '../../assets';
 import {DashCard, Gap, RecentLogin} from '../../components';
 import {getHomeTotal, getRecentLoggedIn} from '../../redux/action';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import moment from 'moment';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
 
   const {total} = useSelector((state) => state.homeReducer);
   const {recentLoggedIn} = useSelector((state) => state.homeReducer);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     dispatch(getHomeTotal());
     dispatch(getRecentLoggedIn());
-  });
+  }, []);
 
-  const keluar = () => {
-    AsyncStorage.removeItem('token').then(() => {
-      navigation.reset({index: 0, routes: [{name: 'Login'}]});
-    });
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(getRecentLoggedIn());
+    setRefreshing(false);
   };
+
   return (
     <ImageBackground
       source={ImageHeader}
@@ -99,7 +91,10 @@ const Home = ({navigation}) => {
             </View>
             <Icon name="sync-alt" size={20} color="#009046" />
           </View>
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
             <List>
               {recentLoggedIn.map((recentItem, index) => {
                 return (
@@ -157,7 +152,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    height: 1000,
+    height: 900,
     backgroundColor: '#FFF',
     // marginHorizontal: -20,
   },

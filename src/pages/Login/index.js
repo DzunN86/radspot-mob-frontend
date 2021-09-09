@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {Logo} from '../../assets';
 import {Button, Gap, TextInput} from '../../components';
-import {loginAction, setLoading} from '../../redux/action';
+import {loginAction} from '../../redux/action';
 import {useForm} from '../../utils';
 
 const Login = ({navigation}) => {
@@ -11,10 +11,8 @@ const Login = ({navigation}) => {
     username: '',
     password: '',
   });
-
   const dispatch = useDispatch();
   const onSubmit = () => {
-    dispatch(setLoading(true));
     dispatch(loginAction(form, navigation));
   };
 

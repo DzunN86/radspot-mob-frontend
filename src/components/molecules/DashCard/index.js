@@ -1,11 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const DashCard = ({icon, color, bgcolor, label, total}) => {
   return (
-    <TouchableOpacity>
+    <View>
       <View style={styles.container}>
         <View style={styles.content}>
           <View style={styles.icon(bgcolor)}>
@@ -31,7 +30,7 @@ const DashCard = ({icon, color, bgcolor, label, total}) => {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
