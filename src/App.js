@@ -12,7 +12,7 @@ const MainApp = () => {
   return (
     <NavigationContainer>
       <Router />
-      <FlashMessage position="top" />
+      <FlashMessage position="top" hideOnPress />
       {isLoading && <Loading />}
     </NavigationContainer>
   );

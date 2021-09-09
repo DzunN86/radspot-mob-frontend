@@ -1,5 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React from 'react';
+import {
+  Body,
+  Container,
+  Content,
+  Left,
+  List,
+  ListItem,
+  Right,
+} from 'native-base';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,10 +18,25 @@ import {
   ImageBackground,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Avatar, ImageHeader} from '../../assets';
-import {DashCard, Gap} from '../../components';
+import {DashCard, Gap, RecentLogin} from '../../components';
+import {getHomeTotal, getRecentLoggedIn} from '../../redux/action';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import moment from 'moment';
 
-const Users = ({navigation}) => {
+const Home = ({navigation}) => {
+  const dispatch = useDispatch();
+
+  const {total} = useSelector((state) => state.homeReducer);
+  const {recentLoggedIn} = useSelector((state) => state.homeReducer);
+
+  useEffect(() => {
+    dispatch(getHomeTotal());
+    dispatch(getRecentLoggedIn());
+  });
+
   const keluar = () => {
     AsyncStorage.removeItem('token').then(() => {
       navigation.reset({index: 0, routes: [{name: 'Login'}]});
@@ -21,7 +45,12 @@ const Users = ({navigation}) => {
   return (
     <ImageBackground
       source={ImageHeader}
-      style={{width: '100%', height: '100%', backgroundColor: '#A92D5F'}}>
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#A92D5F',
+        flex: 1,
+      }}>
       <View>
         <View style={styles.profileContainer}>
           <View>
@@ -38,46 +67,62 @@ const Users = ({navigation}) => {
               color={'#009046'}
               bgcolor={'#CCFFE5'}
               label={'Users'}
+              total={total.user}
             />
             <DashCard
               icon={'layer-group'}
               color={'#FF6800'}
               bgcolor={'#FFE1CC'}
               label={'Groups'}
+              total={total.group}
             />
             <DashCard
               icon={'server'}
               color={'#0071E0'}
               bgcolor={'#CCE6FF'}
               label={'Nas'}
+              total={total.nas}
             />
             <DashCard
               icon={'user-shield'}
               color={'#E30A29'}
               bgcolor={'#FDCED5'}
               label={'Operators'}
+              total={total.operator}
             />
           </View>
         </ScrollView>
-        <TouchableOpacity onPress={keluar}>
-          <Text style={styles.keluar}>Keluar</Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            paddingTop: 25,
-            paddingHorizontal: 30,
-            backgroundColor: '#F6F6F6',
-            flex: 1,
-            borderTopRightRadius: 20,
-            borderTopLeftRadius: 20,
-            marginTop: 35,
-          }}></View>
+        <View style={styles.ops}>
+          <View style={styles.recentContainer}>
+            <View>
+              <Text style={styles.title}>Login Terbaru</Text>
+            </View>
+            <Icon name="sync-alt" size={20} color="#009046" />
+          </View>
+          <ScrollView>
+            <List>
+              {recentLoggedIn.map((recentItem, index) => {
+                return (
+                  <RecentLogin
+                    item={recentItem}
+                    key={index}
+                    username={recentItem.username}
+                    netArea={recentItem.calledstationid}
+                    time={moment(recentItem.acctstarttime).format(
+                      'DD MMM YYYY',
+                    )}
+                  />
+                );
+              })}
+            </List>
+          </ScrollView>
+        </View>
       </View>
     </ImageBackground>
   );
 };
 
-export default Users;
+export default Home;
 
 const styles = StyleSheet.create({
   container: {backgroundColor: '#A92D5F'},
@@ -87,9 +132,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 32,
     paddingBottom: 24,
-    // backgroundColor: '#A92D5F',
+  },
+  recentContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+    paddingTop: 25,
+    paddingBottom: 15,
   },
   appName: {fontSize: 22, fontFamily: 'Poppins-Medium', color: '#FFFFFF'},
+  title: {fontSize: 20, fontFamily: 'Poppins-Medium', color: '#000000'},
   desc: {fontSize: 14, fontFamily: 'Poppins-Light', color: '#DBDBDB'},
   profile: {width: 47, height: 47, borderRadius: 25},
   dashCard: {
@@ -100,5 +152,13 @@ const styles = StyleSheet.create({
   keluar: {
     color: '#000000',
     fontSize: 24,
+  },
+  ops: {
+    marginTop: 30,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    height: 1000,
+    backgroundColor: '#FFF',
+    // marginHorizontal: -20,
   },
 });

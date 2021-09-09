@@ -1,36 +1,37 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {IcDashGroup, IcDashNas, IcDashOpr, IcDashUser} from '../../../assets';
+import {StyleSheet, Text, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const DashCard = ({icon, color, bgcolor, label}) => {
+const DashCard = ({icon, color, bgcolor, label, total}) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <View
-          style={styles.icon(bgcolor)}>
-          <Icon name={icon} color={color} size={25} />
-        </View>
-        <View>
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: 'Poppins-Reguler',
-              color: '#8689A2',
-            }}>
-            {label}
-          </Text>
-          <Text
-            style={{
-              fontSize: 25,
-              fontFamily: 'Poppins-Medium',
-              color: '#363B64',
-            }}>
-            1400
-          </Text>
+    <TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <View style={styles.icon(bgcolor)}>
+            <Icon name={icon} color={color} size={25} />
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: 'Poppins-Reguler',
+                color: '#8689A2',
+              }}>
+              {label}
+            </Text>
+            <Text
+              style={{
+                fontSize: 25,
+                fontFamily: 'Poppins-Medium',
+                color: '#363B64',
+              }}>
+              {total}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -52,14 +53,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
   },
-  icon: (color)=> ({
+  icon: (color) => ({
     width: 56,
     height: 56,
     marginRight: 15,
     overflow: 'hidden',
-    backgroundColor:color,
+    backgroundColor: color,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-  })
+  }),
 });

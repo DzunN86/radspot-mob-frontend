@@ -5,6 +5,12 @@ import {setLoading} from './global';
 
 export const loginAction = (form, navigation) => (dispatch) => {
   dispatch(setLoading(true));
+  if (!form.username || !form.password) {
+    showMessage('Username & password harus diisi');
+    dispatch(setLoading(false));
+
+    return;
+  }
   Axios({
     method: 'get',
     url: `${API_HOST.url}/auth/login`,
@@ -22,6 +28,6 @@ export const loginAction = (form, navigation) => (dispatch) => {
     .catch((err) => {
       console.log(err);
       dispatch(setLoading(false));
-      showMessage(err?.response?.data?.data?.message);
+      showMessage(err.response.data.message || 'Invalid Login');
     });
 };
