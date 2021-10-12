@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import moment from 'moment';
 import {List} from 'native-base';
 import React, {useEffect, useState} from 'react';
@@ -37,6 +38,7 @@ const Home = ({navigation}) => {
   return (
     <ImageBackground
       source={ImageHeader}
+      // eslint-disable-next-line react-native/no-inline-styles
       style={{
         width: '100%',
         height: '100%',

@@ -25,6 +25,7 @@ const Login = ({navigation}) => {
           RadSpot
         </Text>
         <Text
+          // eslint-disable-next-line react-native/no-inline-styles
           style={{
             fontSize: 17,
             fontFamily: 'Poppins-Reguler',
